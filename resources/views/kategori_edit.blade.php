@@ -1,33 +1,34 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Kategori</title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
-          integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
-</head>
-<body>
-<form action="/admin/kategori/{{$kategori->id}}/update" method="POST">
-    <input type="hidden" name="_token" value="{{csrf_token()}}"/>
-    <h2>Edit Data Kategori</h2>
-    <div class="col-md-5">
-        <input hidden="text" name="id" class="form-control" value="{{$kategori->id}}">
-        <input type="text" name="nama_kategori" class="form-control" value="{{$kategori->nama_kategori}}">
-    </div>
-    <br>
-    <input type="submit" value="Kirim" class="btn btn-success"/>
-</form>
+@extends('gudang_master')
 
-<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
-        integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"
-        crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
-        integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
-        crossorigin="anonymous"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
-        integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
-        crossorigin="anonymous"></script>
+@section('konten')
 
-</body>
-</html>
+        <!-- Begin Page Content -->
+        <div class="container-fluid">
+
+          <!-- Page Heading -->
+          <h1 class="h3 mb-2 text-gray-800">Category</h1>
+          <p class="mb-4">a class or division of people or things regarded as having particular shared characteristics.</p>
+
+          <!-- DataTales Example -->
+          <div class="card shadow mb-4">
+            <div class="card-header py-3">
+              <h6 class="m-0 font-weight-bold text-primary">Edit Category</h6>
+            </div>
+            <div class="card-body">
+            <form action="/admin/kategori/{{$nama_kategori->id}}/update" method="POST">
+                <input type="hidden" name="_token" value="{{csrf_token()}}">
+                <div class="form-group">
+                    <p> Product Name
+                    <input hidden="text" name="id" class="form-control" value="{{$nama_kategori->id}}">
+                    <input type="text" name="nama_kategori" class="form-control" value="{{$nama_kategori->nama_kategori}}">
+                    </p>
+                </div>
+                <input type="submit" value="Edit" class="btn btn-success col-12"/>
+            </form>
+            </div>
+          </div>
+
+        </div>
+        <!-- /.container-fluid -->
+
+@endsection

@@ -13,3 +13,4 @@ class Transaksi extends Model
         return $this->belongsTo(Nota::class);
     }
 }
+

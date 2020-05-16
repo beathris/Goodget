@@ -13,48 +13,54 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-// Route::get('/', function () {
-//     return view('welcome');
-// });
+Route::get('/', function () {
+    return view('login_page');
+});
 
-//USER
+//auth
 Route::get('/login', 'UserController@login');
 Route::post('/login/action', 'UserController@loginAction');
 
+Route::get('/signup', 'UserController@signup');
+Route::post('/signup/action', 'UserController@signupAction');
+
+Route::get('/signout', 'GudangController@signOut');
+Route::get('/sign-out', 'TokoController@signOut');
+
+//admin
 Route::get('/admin', 'GudangController@index');
 Route::get('/admin/add/post', 'GudangController@gudangAddPost');
 Route::post('/admin/add/post/save', 'GudangController@gudangAddSave');
 Route::get('/admin/edit/{id}', 'GudangController@gudangEditPost');
 Route::post('/admin/{id}/update', 'GudangController@gudangEditPostSave');
-
 Route::get('/admin/detail/{id}', 'GudangController@gudangDetailPost');
-
-Route::get('/admin/delete/{id}', 'GudangController@gudangDeletePost');
+Route::get('/admin/delete/produk/{id}', 'GudangController@gudangDeletePost');
 Route::get('/admin/search', 'GudangController@gudangSearch');
-
-Route::get('/sign-out', 'GudangController@signOut');
-
 
 //kategori
 Route::get('/admin/kategori', 'KategoriController@index');
 Route::get('/admin/kategori/add', 'KategoriController@kategoriAddPost');
-Route::post('/admin/kategori/add/save', 'KategoriController@kategoriAddSave');
+Route::post('/admin/kategori/add/post/save', 'KategoriController@kategoriAddSave');
 Route::get('/admin/kategori/edit/{id}', 'KategoriController@kategoriEditPost');
 Route::post('/admin/kategori/{id}/update', 'KategoriController@kategoriEditPostSave');
+Route::get('/admin/kategori/delete/{id}', 'KategoriController@kategoriDeletePost');
+Route::get('/admin/kategori/search', 'GudangController@gudangSearchKategori');
 
-Route::get('/admin/delete/{id}', 'KategoriController@kategoriDeletePost');
-//Route::get('/admin/search', 'GudangController@gudangSearch');
-// Route::get('/admin', function () {
-//     return view('gudang_index');
+//user
+Route::get('/user', 'TokoController@index');
+Route::get('/user/cari/produk', 'TokoController@cari');
+Route::get('/user/detail/{id}', 'TokoController@detail');
+Route::get('/user/kategori/laptop', 'TokoController@kategori');
+Route::get('/user/kategori/smartphone', 'TokoController@kategoriHp');
+Route::get('/user/kategori/aksesoris', 'TokoController@kategoriAcc');
+Route::get('/index', 'TokoController@index2');
+Route::get('/user/beli/{id}', 'TokoController@addToCart');
+Route::get('/user/keranjang', 'TokoController@keranjang');
+Route::get('/user/keranjang/delete/{id}', 'TokoController@keranjangDeletePost');
+Route::post('/user/nota', 'TokoController@checkout');
+Route::get('/nota', 'TokoController@nota');
+Route::get('/download/nota/{id}', 'TokoController@downloadNota');
 
-Route::get('/produk', 'ProdukController@index');
-//beli
-Route::get('/produk/beli/{id}', 'ProdukController@barangKeranjang');
-//keranjang
-Route::get('/produk/keranjang', 'ProdukController@keranjang');
-//checkout
-Route::post('/keranjang/nota', 'ProdukController@checkOut');
-//Nota
-Route::get('/nota', 'ProdukController@nota')->name('/keranjang/nota');
-//download Nota
-Route::get('/download/nota/{id}', 'ProdukController@downloadNota');
+// Route::post('/keranjang/nota', 'TokoController@checkOut');
+
+// Route::get('/download/nota/{id}', 'ProdukController@downloadNota');

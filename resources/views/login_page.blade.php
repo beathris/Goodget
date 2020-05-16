@@ -2,123 +2,66 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-<!--===============================================================================================-->
-	<link rel="icon" type="image/png" href="images/icons/favicon.ico"/>
-<!--===============================================================================================-->
-	<link rel="stylesheet" type="text/css" href="vendor/bootstrap/css/bootstrap.min.css">
-<!--===============================================================================================-->
-	<link rel="stylesheet" type="text/css" href="fonts/font-awesome-4.7.0/css/font-awesome.min.css">
-<!--===============================================================================================-->
-	<link rel="stylesheet" type="text/css" href="fonts/iconic/css/material-design-iconic-font.min.css">
-<!--===============================================================================================-->
-	<link rel="stylesheet" type="text/css" href="vendor/animate/animate.css">
-<!--===============================================================================================-->
-	<link rel="stylesheet" type="text/css" href="vendor/css-hamburgers/hamburgers.min.css">
-<!--===============================================================================================-->
-	<link rel="stylesheet" type="text/css" href="vendor/animsition/css/animsition.min.css">
-<!--===============================================================================================-->
-	<link rel="stylesheet" type="text/css" href="vendor/select2/select2.min.css">
-<!--===============================================================================================-->
-	<link rel="stylesheet" type="text/css" href="vendor/daterangepicker/daterangepicker.css">
-<!--===============================================================================================-->
-	<link rel="stylesheet" type="text/css" href="{{ asset('css/util.css') }}">
-	<link rel="stylesheet" type="text/css" href="{{ asset('css/main.css') }}">
-<!--===============================================================================================-->
-    <title>{{$title}}</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Login</title>
+
+    <!-- Font Icon -->
+    <link rel="stylesheet" href="{{url('assets/library/template/fonts/material-icon/css/material-design-iconic-font.min.css')}}">
+    
+    <!-- Main css -->
+    <link rel="stylesheet" href="{{url('assets/library/template/css/style_login.css')}}">
 </head>
 <body>
 
-<!-- CONTENT -->
-<div class="limiter">
-    <div class="container-login100">
-        <div class="wrap-login100">
-            <form class="login100-form validate-form" action="{{url('/login/action')}}" method="post">
-                <input type="hidden" name="_token" value="{{csrf_token()}}">
-                <span class="login100-form-title p-b-26">
-                    Welcome
-                </span>
-                <span class="login100-form-title p-b-48">
-                    <i class="zmdi zmdi-font"></i>
-                </span>
-
-                <div class="wrap-input100 validate-input" data-validate = "Valid email is: a@b.c">
-                    <input class="input100" type="email" name="email" require>
-                    <span class="focus-input100" data-placeholder="Email"></span>
+<div class="main">
+    
+    <!-- Sign in Form -->
+    <section class="sign-in">
+        <div class="container">
+            <div class="signin-content">
+                <div class="signin-image">
+                    <figure><img src="{{url('assets/library/template/images/signin-image.jpg')}}" alt="sing up image"></figure>
+                    <a href="{{url('/signup')}}" class="signup-image-link">Create an account</a>
                 </div>
 
-                <div class="wrap-input100 validate-input" data-validate="Enter password">
-                    <span class="btn-show-pass">
-                        <i class="zmdi zmdi-eye"></i>
-                    </span>
-                    <input class="input100" type="password" name="password" require>
-                    <span class="focus-input100" data-placeholder="Password"></span>
+                <div class="signin-form">
+                    <h2 class="form-title">Sign in</h2>
+                    <form method="POST" class="register-form" action="{{url('/login/action')}}">
+                        <input type="hidden" name="_token" value="{{csrf_token()}}">
+                        <div class="form-group">
+                            <label for="your_name"><i class="zmdi zmdi-account material-icons-name"></i></label>
+                            <input type="email" name="email" placeholder="Email" required/>
+                        </div>
+                        <div class="form-group">
+                            <label for="your_pass"><i class="zmdi zmdi-lock"></i></label>
+                            <input type="password" name="password" placeholder="Password" required/>
+                        </div>
+                        <!-- <div class="form-group">
+                            <input type="checkbox" name="remember-me" id="remember-me" class="agree-term" />
+                            <label for="remember-me" class="label-agree-term"><span><span></span></span>Remember me</label>
+                        </div> -->
+                        <div class="form-group form-button">
+                            <input type="submit" class="form-submit" value="Login"/>
+                        </div>
+                    </form>
+                    <!-- <div class="social-login">
+                        <span class="social-label">Or login with</span>
+                        <ul class="socials">
+                            <li><a href="#"><i class="display-flex-center zmdi zmdi-facebook"></i></a></li>
+                            <li><a href="#"><i class="display-flex-center zmdi zmdi-twitter"></i></a></li>
+                            <li><a href="#"><i class="display-flex-center zmdi zmdi-google"></i></a></li>
+                        </ul>
+                    </div> -->
                 </div>
-
-                <div class="container-login100-form-btn">
-                    <div class="wrap-login100-form-btn">
-                        <div class="login100-form-bgbtn"></div>
-                        <button class="login100-form-btn" type="submit" value="Login">
-                            Login
-                        </button>
-                    </div>
-                </div>
-
-                <div class="text-center p-t-115">
-                    <span class="txt1">
-                        Don’t have an account?
-                    </span>
-
-                    <a class="txt2" href="#">
-                        Sign Up
-                    </a>
-                </div>
-            </form>
-        </div>
-    </div>
-</div>
-
-<!-- <section class="bg-color-0">
-    <div class="container">
-        <div class="row align-items-center half-screen space">
-            <div class="col-md-4 offset-md-4">
-                <form action="{{url('/action')}}" method="post">
-                <input type="hidden" name="_token" value="{{csrf_token()}}">
-
-                <div class="form-group">
-                    <label>Email</label>
-                    <input type="email" name="email" class="form-control" placeholder="Tulis email disini" require><br>
-                </div>
-                <div class="form-group">
-                    <label>Password</label>
-                    <input type="password" name="password" class="form-control" placeholder="Tulis password disini" require><br>
-                </div>
-                <input type="submit" value="Login" class="btn btn-success btn-block">
-                </form>
             </div>
         </div>
-    </div>
-</section> -->
+    </section>
 
-<!-- FOOTER -->
+</div>
 
-
-<!--===============================================================================================-->
-<script src="vendor/jquery/jquery-3.2.1.min.js"></script>
-<!--===============================================================================================-->
-	<script src="vendor/animsition/js/animsition.min.js"></script>
-<!--===============================================================================================-->
-	<script src="vendor/bootstrap/js/popper.js"></script>
-	<script src="vendor/bootstrap/js/bootstrap.min.js"></script>
-<!--===============================================================================================-->
-	<script src="vendor/select2/select2.min.js"></script>
-<!--===============================================================================================-->
-	<script src="vendor/daterangepicker/moment.min.js"></script>
-	<script src="vendor/daterangepicker/daterangepicker.js"></script>
-<!--===============================================================================================-->
-	<script src="vendor/countdowntime/countdowntime.js"></script>
-<!--===============================================================================================-->
-	<script src="js/main.js"></script>
-
+    <!-- JS -->
+    <script src="{{url('assets/library/jquery/jquery-3.4.1.js')}}"></script>
+    <script src="{{url('assets/library/bootstrap/js/bootstrap.js')}}"></script>
 </body>
 </html>

@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.9.1
+-- version 5.0.1
 -- https://www.phpmyadmin.net/
 --
--- Host: 127.0.0.1
--- Waktu pembuatan: 16 Mar 2020 pada 17.11
--- Versi server: 10.4.8-MariaDB
--- Versi PHP: 7.3.11
+-- Host: 127.0.0.1:3307
+-- Generation Time: May 11, 2020 at 06:26 PM
+-- Server version: 10.4.11-MariaDB
+-- PHP Version: 7.4.3
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
@@ -25,299 +25,310 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `admin`
---
-
-CREATE TABLE `admin` (
-  `id` int(11) NOT NULL,
-  `username` varchar(45) DEFAULT NULL,
-  `email` varchar(45) DEFAULT NULL,
-  `password` varchar(45) DEFAULT NULL,
-  `gudang_id_barang` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 ROW_FORMAT=DYNAMIC;
-
--- --------------------------------------------------------
-
---
--- Struktur dari tabel `gudang`
---
-
-CREATE TABLE `gudang` (
-  `id_barang` int(11) NOT NULL,
-  `nama` varchar(45) DEFAULT NULL,
-  `stock` int(11) DEFAULT NULL,
-  `foto` blob DEFAULT NULL,
-  `kategori` varchar(45) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 ROW_FORMAT=DYNAMIC;
-
---
--- Dumping data untuk tabel `gudang`
---
-
-INSERT INTO `gudang` (`id_barang`, `nama`, `stock`, `foto`, `kategori`) VALUES
-(1, 'Lenovo Y530', 100, NULL, 'laptop'),
-(2, 'Lenovo Y520', 40, NULL, 'laptop'),
-(3, 'Lenovo Y500', 40, NULL, 'laptop'),
-(4, 'Acer', 15, NULL, 'laptop'),
-(5, 'Xiomi A1', 30, NULL, 'Smartphone');
-
--- --------------------------------------------------------
-
---
--- Struktur dari tabel `kategori`
+-- Table structure for table `kategori`
 --
 
 CREATE TABLE `kategori` (
   `id` int(11) NOT NULL,
-  `nama_kategori` varchar(45) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 ROW_FORMAT=DYNAMIC;
+  `nama_kategori` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `kategori`
+--
+
+INSERT INTO `kategori` (`id`, `nama_kategori`, `created_at`, `updated_at`) VALUES
+(1, 'Laptop', '2020-05-01 18:57:09', NULL),
+(2, 'Smartphone', NULL, NULL),
+(3, 'Accesories', NULL, NULL);
 
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `keranjang`
+-- Table structure for table `keranjang`
 --
 
 CREATE TABLE `keranjang` (
   `id` int(11) NOT NULL,
-  `nama_barang` varchar(45) DEFAULT NULL,
-  `harga` int(11) DEFAULT NULL,
-  `jumlah` int(11) DEFAULT NULL,
-  `total_belanja` int(255) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 ROW_FORMAT=DYNAMIC;
+  `jumlah` int(11) NOT NULL,
+  `subtotal` int(11) NOT NULL,
+  `produk_id` int(11) NOT NULL,
+  `user_id` int(11) NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `laporan`
+-- Table structure for table `laporan_perusahaan`
 --
 
-CREATE TABLE `laporan` (
-  `id_laporan` int(11) NOT NULL,
-  `tgl_masuk` timestamp NULL DEFAULT NULL,
-  `tgl_keluar` timestamp NULL DEFAULT NULL,
-  `gudang_id_barang` int(11) NOT NULL,
-  `id` int(11) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 ROW_FORMAT=DYNAMIC;
+CREATE TABLE `laporan_perusahaan` (
+  `id` int(11) NOT NULL,
+  `periode` datetime NOT NULL,
+  `total_pendapatan` int(11) NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `migrations`
---
-
-CREATE TABLE `migrations` (
-  `id` int(10) UNSIGNED NOT NULL,
-  `migration` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `batch` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
-
--- --------------------------------------------------------
-
---
--- Struktur dari tabel `nota`
+-- Table structure for table `nota`
 --
 
 CREATE TABLE `nota` (
   `id` int(11) NOT NULL,
-  `nama_pembeli` varchar(45) DEFAULT NULL,
-  `tgl_beli` timestamp NULL DEFAULT NULL,
-  `tgl_dikirim` timestamp NULL DEFAULT NULL,
-  `total_belanja` int(11) DEFAULT NULL,
-  `status` varchar(45) DEFAULT NULL,
-  `keranjang_id` int(11) NOT NULL,
-  `user_id` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 ROW_FORMAT=DYNAMIC;
+  `tgl_transaksi` datetime NOT NULL,
+  `total_belanja` int(11) NOT NULL,
+  `status` enum('Sudah Dibayar','Belum Dibayar') COLLATE utf8mb4_unicode_ci NOT NULL,
+  `user_id` int(11) NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `produk`
+-- Table structure for table `produk`
 --
 
 CREATE TABLE `produk` (
   `id` int(11) NOT NULL,
-  `nama` varchar(45) DEFAULT NULL,
-  `harga` int(11) DEFAULT NULL,
-  `stok` int(11) DEFAULT NULL,
-  `foto` varchar(45) DEFAULT NULL,
-  `warna` varchar(45) DEFAULT NULL,
-  `spesifikasi` varchar(100) DEFAULT NULL,
-  `gudang_id_barang` int(11) NOT NULL,
-  `keranjang_id` int(11) NOT NULL,
-  `kategori_id` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 ROW_FORMAT=DYNAMIC;
+  `nama_barang` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `tgl_masuk` datetime NOT NULL,
+  `harga` int(11) NOT NULL,
+  `harga_jual` int(11) NOT NULL,
+  `stok` int(11) NOT NULL,
+  `warna` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `spesifikasi` text COLLATE utf8mb4_unicode_ci NOT NULL,
+  `foto` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `kategori_id` int(11) NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `produk`
+--
+
+INSERT INTO `produk` (`id`, `nama_barang`, `tgl_masuk`, `harga`, `harga_jual`, `stok`, `warna`, `spesifikasi`, `foto`, `kategori_id`, `created_at`, `updated_at`) VALUES
+(1, 'Macbook Pro', '2020-05-02 00:00:00', 28000, 30000000, 80, 'hitam', 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.', '/assets/produk/lenovo2a.jpg', 1, '2020-05-01 10:59:21', '2020-05-03 09:08:41'),
+(2, 'Lenovo Y530', '2020-05-01 00:00:00', 9000000, 10000000, 92, 'hitam', 'assssssssssssssddddddddddddddddddddddddddddddwwwwwwwwwwwwwwwwwwwww5555555555555555555554', '/assets/produk/lenovo2a.jpg', 1, '2020-05-01 10:59:59', '2020-05-03 09:08:41'),
+(3, 'ASUS ExpertBook', '2020-05-13 20:15:48', 12000000, 13000000, 3, 'hitam', 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.', '/assets/produk/asus1a.jpg', 1, NULL, NULL),
+(4, 'ASUS ZenBook', '2020-05-21 20:37:01', 12000000, 13000000, 12, 'hitam', 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.', '/assets/produk/asus2a.jpg', 1, NULL, NULL),
+(5, 'Samsung-A20', '2020-05-20 21:59:11', 8000000, 9000000, 5, 'hitam', 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.', '/assets/produk/samsung1.png', 2, NULL, NULL),
+(6, 'Samsung-S20', '2020-05-20 21:58:11', 12000000, 13000000, 5, 'hitam', 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.', '/assets/produk/samsung2.png', 2, NULL, NULL),
+(7, 'Samsung-A5', '2020-05-14 22:12:43', 6000000, 7000000, 5, 'hitam', 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.', '/assets/produk/samsung3.png', 2, NULL, NULL);
 
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `role`
+-- Table structure for table `role`
 --
 
 CREATE TABLE `role` (
   `id` int(11) NOT NULL,
-  `nama` varchar(45) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 ROW_FORMAT=DYNAMIC;
+  `nama` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
--- Dumping data untuk tabel `role`
+-- Dumping data for table `role`
 --
 
-INSERT INTO `role` (`id`, `nama`) VALUES
-(1, 'Manager'),
-(2, 'Employee'),
-(3, 'User');
+INSERT INTO `role` (`id`, `nama`, `created_at`, `updated_at`) VALUES
+(1, 'Admin', '2020-05-01 18:57:33', NULL),
+(2, 'User', NULL, NULL);
 
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `user`
+-- Table structure for table `transaksi`
+--
+
+CREATE TABLE `transaksi` (
+  `nota_id` int(11) NOT NULL,
+  `jumlah` int(11) NOT NULL,
+  `nama_barang` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `harga` int(11) NOT NULL,
+  `pajak` double NOT NULL,
+  `produk_id` int(11) NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `user`
 --
 
 CREATE TABLE `user` (
   `id` int(11) NOT NULL,
-  `username` varchar(45) DEFAULT NULL,
-  `email` varchar(45) DEFAULT NULL,
-  `password` varchar(255) DEFAULT NULL,
-  `status` varchar(255) DEFAULT NULL,
-  `role_id` int(11) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 ROW_FORMAT=DYNAMIC;
+  `username` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `email` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `password` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `status` enum('aktif','nonaktif') COLLATE utf8mb4_unicode_ci NOT NULL,
+  `role_id` int(11) NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
--- Dumping data untuk tabel `user`
+-- Dumping data for table `user`
 --
 
-INSERT INTO `user` (`id`, `username`, `email`, `password`, `status`, `role_id`) VALUES
-(1, 'Manager', 'manager@manager.com', 'manager', 'active', 1),
-(2, 'Employee', 'employee@employee.com', 'employee', 'active', 2),
-(3, 'User', 'user@user.com', 'user', 'active', 3);
+INSERT INTO `user` (`id`, `username`, `email`, `password`, `status`, `role_id`, `created_at`, `updated_at`) VALUES
+(1, 'admin', 'admin@goodget.com', '12345', 'aktif', 1, NULL, NULL),
+(2, 'user', 'user@goodget.com', '12345', 'aktif', 2, NULL, NULL),
+(6, 'almas', 'almas@goodget.com', '12345', 'aktif', 2, NULL, NULL),
+(7, 'betris', 'betris@gmail.com', 'qwerty', 'aktif', 2, NULL, NULL);
 
 --
 -- Indexes for dumped tables
 --
 
 --
--- Indeks untuk tabel `admin`
---
-ALTER TABLE `admin`
-  ADD PRIMARY KEY (`id`,`gudang_id_barang`) USING BTREE,
-  ADD KEY `fk_admin_gudang1` (`gudang_id_barang`) USING BTREE;
-
---
--- Indeks untuk tabel `gudang`
---
-ALTER TABLE `gudang`
-  ADD PRIMARY KEY (`id_barang`) USING BTREE;
-
---
--- Indeks untuk tabel `kategori`
+-- Indexes for table `kategori`
 --
 ALTER TABLE `kategori`
-  ADD PRIMARY KEY (`id`) USING BTREE;
+  ADD PRIMARY KEY (`id`);
 
 --
--- Indeks untuk tabel `keranjang`
+-- Indexes for table `keranjang`
 --
 ALTER TABLE `keranjang`
-  ADD PRIMARY KEY (`id`) USING BTREE;
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `keranjang_produk_id_foreign` (`produk_id`),
+  ADD KEY `keranjang_user_id_foreign` (`user_id`);
 
 --
--- Indeks untuk tabel `laporan`
+-- Indexes for table `laporan_perusahaan`
 --
-ALTER TABLE `laporan`
-  ADD PRIMARY KEY (`id_laporan`) USING BTREE,
-  ADD KEY `fk_laporan_gudang1` (`gudang_id_barang`) USING BTREE,
-  ADD KEY `fk_laporan_user1` (`id`) USING BTREE;
+ALTER TABLE `laporan_perusahaan`
+  ADD PRIMARY KEY (`id`);
 
 --
--- Indeks untuk tabel `migrations`
---
-ALTER TABLE `migrations`
-  ADD PRIMARY KEY (`id`) USING BTREE;
-
---
--- Indeks untuk tabel `nota`
+-- Indexes for table `nota`
 --
 ALTER TABLE `nota`
-  ADD PRIMARY KEY (`id`,`keranjang_id`,`user_id`) USING BTREE,
-  ADD KEY `fk_nota_keranjang1` (`keranjang_id`) USING BTREE,
-  ADD KEY `fk_nota_user1` (`user_id`) USING BTREE;
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `nota_user_id_foreign` (`user_id`);
 
 --
--- Indeks untuk tabel `produk`
+-- Indexes for table `produk`
 --
 ALTER TABLE `produk`
-  ADD PRIMARY KEY (`id`,`gudang_id_barang`,`keranjang_id`,`kategori_id`) USING BTREE,
-  ADD KEY `fk_produk_gudang1` (`gudang_id_barang`) USING BTREE,
-  ADD KEY `fk_produk_keranjang1` (`keranjang_id`) USING BTREE,
-  ADD KEY `fk_produk_kategori1` (`kategori_id`) USING BTREE;
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `produk_kategori_id_foreign` (`kategori_id`);
 
 --
--- Indeks untuk tabel `role`
+-- Indexes for table `role`
 --
 ALTER TABLE `role`
-  ADD PRIMARY KEY (`id`) USING BTREE;
+  ADD PRIMARY KEY (`id`);
 
 --
--- Indeks untuk tabel `user`
+-- Indexes for table `transaksi`
+--
+ALTER TABLE `transaksi`
+  ADD KEY `transaksi_nota_id_foreign` (`nota_id`),
+  ADD KEY `transaksi_produk_id_foreign` (`produk_id`);
+
+--
+-- Indexes for table `user`
 --
 ALTER TABLE `user`
-  ADD PRIMARY KEY (`id`) USING BTREE,
-  ADD KEY `fk_user_role1` (`role_id`) USING BTREE;
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `user_email_unique` (`email`),
+  ADD KEY `user_role_id_foreign` (`role_id`);
 
 --
--- AUTO_INCREMENT untuk tabel yang dibuang
+-- AUTO_INCREMENT for dumped tables
 --
 
 --
--- AUTO_INCREMENT untuk tabel `kategori`
+-- AUTO_INCREMENT for table `kategori`
 --
 ALTER TABLE `kategori`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+--
+-- AUTO_INCREMENT for table `keranjang`
+--
+ALTER TABLE `keranjang`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=50;
+
+--
+-- AUTO_INCREMENT for table `laporan_perusahaan`
+--
+ALTER TABLE `laporan_perusahaan`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT untuk tabel `migrations`
---
-ALTER TABLE `migrations`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
-
---
--- Ketidakleluasaan untuk tabel pelimpahan (Dumped Tables)
---
-
---
--- Ketidakleluasaan untuk tabel `admin`
---
-ALTER TABLE `admin`
-  ADD CONSTRAINT `fk_admin_gudang1` FOREIGN KEY (`gudang_id_barang`) REFERENCES `gudang` (`id_barang`) ON DELETE NO ACTION ON UPDATE NO ACTION;
-
---
--- Ketidakleluasaan untuk tabel `laporan`
---
-ALTER TABLE `laporan`
-  ADD CONSTRAINT `fk_laporan_gudang1` FOREIGN KEY (`gudang_id_barang`) REFERENCES `gudang` (`id_barang`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  ADD CONSTRAINT `fk_laporan_user1` FOREIGN KEY (`id`) REFERENCES `user` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
-
---
--- Ketidakleluasaan untuk tabel `nota`
+-- AUTO_INCREMENT for table `nota`
 --
 ALTER TABLE `nota`
-  ADD CONSTRAINT `fk_nota_keranjang1` FOREIGN KEY (`keranjang_id`) REFERENCES `keranjang` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  ADD CONSTRAINT `fk_nota_user1` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=114;
 
 --
--- Ketidakleluasaan untuk tabel `produk`
+-- AUTO_INCREMENT for table `produk`
 --
 ALTER TABLE `produk`
-  ADD CONSTRAINT `fk_produk_gudang1` FOREIGN KEY (`gudang_id_barang`) REFERENCES `gudang` (`id_barang`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  ADD CONSTRAINT `fk_produk_kategori1` FOREIGN KEY (`kategori_id`) REFERENCES `kategori` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  ADD CONSTRAINT `fk_produk_keranjang1` FOREIGN KEY (`keranjang_id`) REFERENCES `keranjang` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
--- Ketidakleluasaan untuk tabel `user`
+-- AUTO_INCREMENT for table `role`
+--
+ALTER TABLE `role`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+--
+-- AUTO_INCREMENT for table `user`
 --
 ALTER TABLE `user`
-  ADD CONSTRAINT `fk_user_role1` FOREIGN KEY (`role_id`) REFERENCES `role` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+
+--
+-- Constraints for dumped tables
+--
+
+--
+-- Constraints for table `keranjang`
+--
+ALTER TABLE `keranjang`
+  ADD CONSTRAINT `keranjang_produk_id_foreign` FOREIGN KEY (`produk_id`) REFERENCES `produk` (`id`),
+  ADD CONSTRAINT `keranjang_user_id_foreign` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`);
+
+--
+-- Constraints for table `nota`
+--
+ALTER TABLE `nota`
+  ADD CONSTRAINT `nota_user_id_foreign` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`);
+
+--
+-- Constraints for table `produk`
+--
+ALTER TABLE `produk`
+  ADD CONSTRAINT `produk_kategori_id_foreign` FOREIGN KEY (`kategori_id`) REFERENCES `kategori` (`id`);
+
+--
+-- Constraints for table `transaksi`
+--
+ALTER TABLE `transaksi`
+  ADD CONSTRAINT `transaksi_nota_id_foreign` FOREIGN KEY (`nota_id`) REFERENCES `nota` (`id`),
+  ADD CONSTRAINT `transaksi_produk_id_foreign` FOREIGN KEY (`produk_id`) REFERENCES `produk` (`id`);
+
+--
+-- Constraints for table `user`
+--
+ALTER TABLE `user`
+  ADD CONSTRAINT `user_role_id_foreign` FOREIGN KEY (`role_id`) REFERENCES `role` (`id`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

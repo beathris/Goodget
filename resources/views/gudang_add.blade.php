@@ -1,71 +1,89 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
-          integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
-    <link rel="stylesheet" href="{{url('assets/library/dropzone-5.7.0/dropzone.min.css')}}">
-    <title>Document</title>
-</head>
-<body>
-<div class="container">
-    <h2>Masukan Data Produk</h2>
-    <form action="{{url('/admin/add/post/save')}}" method="POST" enctype="multipart/form-data">
-        <input type="hidden" name="_token" value="{{csrf_token()}}">
-        <div class="form-group">
-            <input type="text" name="id" class="form-control" placeholder="Masukan id">
-        </div>
-        <div class="form-group">
-            <input type="text" name="nama_barang" class="form-control" placeholder="Masukan Nama">
-        </div>
-        <br>
-        <div class="form-group">
-            <input type="date" name="tgl_masuk" class="form-control" placeholder="Masukan Tanggal Masuk">
-        </div>
-        <br>
-        <div class="form-group">
-            <input type="text" name="harga" class="form-control" placeholder="Masukan Harga">
-        </div>
-        <br>
-        <div class="form-group">
-            <input type="text" name="harga_jual" class="form-control" placeholder="Masukan Harga Jual">
-        </div>
-        <br>
-        <div class="form-group">
-            <input type="text" name="stok" class="form-control" placeholder="Masukan Stok">
-        </div>
-        <br>
-        <div class="form-group">
-            <input type="text" name="warna" class="form-control" placeholder="Masukan Warna">
-        </div>
-        <br>
-        <div class="form-group">
-        <input type="text" name="kategori_id" class="form-control" placeholder="Masukan Id Kategori">
-        </div>
-        <br>
-        <div class="form-group">
-    <textarea class="form-control" id="exampleFormControlTextarea1" name="spesifikasi" rows="3"
-              placeholder="Spesifikasi">
-    </textarea>
-        </div>
-        <div class="form-group">
-            <input type="file" class="form-control" name="file" multiple="multiple">
-        </div>
-        <input type="submit" value="Simpan" class="btn btn-success"/>
-    </form>
-</div>
+@extends('gudang_master')
 
-<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
-        integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"
-        crossorigin="anonymous"></script>
+@section('konten')
 
-<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
-        integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
-        crossorigin="anonymous"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
-        integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
-        crossorigin="anonymous"></script>
-<script src="{{url('assets/library/dropzone-5.7.0/dropzone.min.js')}}"></script>
-</body>
-</html>
+        <!-- Begin Page Content -->
+        <div class="container-fluid">
+
+          <!-- Page Heading -->
+          <h1 class="h3 mb-2 text-gray-800">Product</h1>
+          <p class="mb-4">an object or system made available for consumer use, it is anything that can be offered to a market to satisfy the desire or need of a customer.</p>
+
+          <!-- DataTales Example -->
+          <div class="card shadow mb-4">
+            <div class="card-header py-3">
+              <h6 class="m-0 font-weight-bold text-primary">Add Product</h6>
+            </div>
+            <div class="card-body">
+            <form action="{{url('/admin/add/post/save')}}" method="POST" enctype="multipart/form-data">
+                <input type="hidden" name="_token" value="{{csrf_token()}}">
+                <!-- <h2>Masukan Data Kategori</h2> -->
+                <div class="form-group">
+                    <p> Foto <br>
+                        <input type="file" name="file">
+                    </p>
+                <div>
+                <!-- <div class="form-group">
+                    <p > Id
+                        <input type="text" name="id" class="form-control">
+                    </p>
+                </div> -->
+                <!-- <div class="form-group">
+                    <p> Kategori
+                        <input type="text" name="kategori_id" class="form-control">
+                    </p>
+                </div> -->
+                <div class="form-group">
+                    <p>Kategori<br>
+                        <select  class="form-control" name="kategori_id" class="form-control">
+                            <option value="1"> Laptop </option>
+                            <option value="2"> Smartphone </option>
+                            <option value="3"> Accessories </option>
+                        </select>
+                    </p>
+                </div>
+                <div class="form-group">
+                    <p> Nama Produk
+                        <input type="text" name="nama_barang" class="form-control">
+                    </p>
+                </div>
+                <div class="form-group">
+                    <p> Stok
+                        <input type="number" name="stok" class="form-control">
+                    </p>
+                </div>
+                <div class="form-group">
+                    <p> Warna
+                        <input type="text" name="warna" class="form-control">
+                    </p>
+                </div><div class="form-group">
+                    <p> Tanggal Masuk
+                        <input type="datetime-local" name="tgl_masuk" class="form-control">
+                    </p>
+                </div>
+                <div class="form-group">
+                    <p> Harga Beli
+                        <input type="number" name="harga" class="form-control">
+                    </p>
+                </div>
+                <div class="form-group">
+                    <p> Harga Jual
+                        <input type="number" name="harga_jual" class="form-control">
+                    </p>
+                </div>
+                <div class="form-group">
+                    <p> Description
+                        <textarea type="text" name="spesifikasi" class="form-control"></textarea>
+                    </p>
+                </div>
+                <input type="submit" value="Add" class="btn btn-success col-sm-12"/>
+                </div>
+                </div>
+            </form>
+            </div>
+          </div>
+
+        </div>
+        <!-- /.container-fluid -->
+
+@endsection

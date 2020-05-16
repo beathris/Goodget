@@ -1,33 +1,44 @@
-<link href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
-<script src="//netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
-<script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
-<!------ Include the above in your HEAD tag ---------->
+@extends('gudang_master')
 
-<div class="container">
-    <div class="row">
-        <div class="col-xs-12 col-sm-12 col-md-12">
-            <div class="well well-sm">
-                <div class="row">
-                    <div class="col-sm-8 col-md-8">
-                        <img src="{{url($produk->foto)}}" alt="" class="img-rounded img-responsive" />
-                    </div>
-                    <div class="col-sm-4 col-md-4">
-                        <h4>
-                            {{$produk->nama_barang}}</h4>
-                            <p>Tgl Masuk : {{$produk->tgl_masuk}}</p>
-                            <p>Harga : {{$produk->harga}}</p>
-                            <p>Harga Jual : {{$produk->harga_jual}}</p>
-                            <p>Stok : {{$produk->stok}}</p>
-                            <p>Warna : {{$produk->warna}}</p>
-                            <p>Kategori : {{$produk->nama_kategori}}</p>
-                        </div>
-                    </div>
-                    <h4>Deskripsi : </h4>
-                     <p>{{$produk->spesifikasi}}</p>
+@section('konten')
+
+        <!-- Begin Page Content -->
+        <div class="container-fluid">
+          <!-- Page Heading -->
+          <h1 class="h3 mb-4 text-gray-800">Detail</h1>
+          <div class="row">
+            <div class="col-lg-6">
+
+              <!-- Brand Buttons -->
+              <div class="card shadow mb-4">
+                <div class="card-header py-3">
+                  <h6 class="m-0 font-weight-bold text-primary">Picture</h6>
                 </div>
-                 </center>
+                <div class="card-body">
+                    <img src="{{$produk->foto}}" height="400" width="480">
+                </div>
+              </div>
             </div>
-        </div>
-    </div>
-</div>
 
+            <div class="col-lg-6">
+              <div class="card shadow mb-4">
+                <div class="card-header py-3">
+                  <h6 class="m-0 font-weight-bold text-primary">Deskripsi</h6>
+                </div>
+                <div class="card-body">
+                    <p>ID : {{$produk->id}}</p>
+                    <p>kategori : {{$produk->nama_kategori}}</p>
+                    <p>Nama Produk : {{$produk->nama_barang}}</p>
+                    <p>Stok : {{$produk->stok}}</p>
+                    <p>Warna : {{$produk->warna}}</p>
+                    <p>Harga Beli : {{$produk->harga_beli}}</p>
+                    <p>Harga Jual : {{$produk->harga_jual}}</p>
+                    <p>Tanggal Masuk : {{$produk->tgl_masuk}}</p>
+                    <p>Deskripsi : {{$produk->spesifikasi}}<p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- /.container-fluid -->
+
+@endsection
