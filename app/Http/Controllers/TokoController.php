@@ -42,7 +42,7 @@ class TokoController extends Controller
 
     public function cari(Request $request)
     {
-        if($request->session()->get('s_status') == "aktif"){
+        if($request->session()->get('s_status') == self::ACTIVE){
             $data['session'] = array(
                 'id' => $request->session()->get('s_id'),
                 'username' => $request->session()->get('s_username'),
@@ -62,7 +62,7 @@ class TokoController extends Controller
         }
     }
     public function search(Request $request){
-        if($request->session()->get('s_status') == "aktif"){
+        if($request->session()->get('s_status') == self::ACTIVE){
             $data['session'] = array(
                 'id' => $request->session()->get('s_id'),
                 'username' => $request->session()->get('s_username'),
