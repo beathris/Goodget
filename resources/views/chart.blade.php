@@ -203,8 +203,8 @@
                                 <div class="row no-gutters align-items-center">
                                     <div class="col mr-2">
                                     @foreach($transaksi as $t)
-                                        <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">Jumlah Pendapatan (Perbulan)</div>
-                                        <div class="h5 mb-0 font-weight-bold text-gray-800">Rp. {{$t->harga}}</div>
+                                        <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">Total Pendapatan</div>
+                                        <div class="h6 mb-0 font-weight-bold text-gray-800">@currency($t->harga)</div>
                                     </div>
                                     <div class="col-auto">
                                         <i class="fas fa-calendar fa-2x text-gray-300"></i>
@@ -221,7 +221,7 @@
                                 <div class="row no-gutters align-items-center">
                                     <div class="col mr-2">
                                         <div class="text-xs font-weight-bold text-success text-uppercase mb-1">Total Pajak</div>
-                                        <div class="h5 mb-0 font-weight-bold text-gray-800">Rp. {{$t->pajak}} </div>
+                                        <div class="h6 mb-0 font-weight-bold text-gray-800">@currency($t->pajak)</div>
                                     </div>
                                     <div class="col-auto">
                                         <i class="fas fa-dollar-sign fa-2x text-gray-300"></i>
@@ -240,7 +240,7 @@
                                         <div class="text-xs font-weight-bold text-info text-uppercase mb-1">Barang Terjual</div>
                                         <div class="row no-gutters align-items-center">
                                             <div class="col-auto">
-                                                <div class="h5 mb-0 mr-3 font-weight-bold text-gray-800">{{$t->jumlah}}</div>
+                                                <div class="h6 mb-0 mr-3 font-weight-bold text-gray-800">{{$t->jumlah}}</div>
                                             </div>
                                             <div class="col">
                                                 <div class="progress progress-sm mr-2">
@@ -264,7 +264,7 @@
                                 <div class="row no-gutters align-items-center">
                                     <div class="col mr-2">
                                         <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">Jumlah Transaksi</div>
-                                        <div class="h5 mb-0 font-weight-bold text-gray-800">{{$t->transaksi}}</div>
+                                        <div class="h6 mb-0 mr-3 font-weight-bold text-gray-800">{{$t->transaksi}}</div>
                                     </div>
                                     <div class="col-auto">
                                         <i class="fas fa-comments fa-2x text-gray-300"></i>
@@ -298,155 +298,13 @@
                                 </div>
                             </div>
                             <!-- Card Body -->
-                            @foreach($query as $q)
                             <div class="card-body">
                                 <div class="chart-area">
                                     <canvas id="myAreaChart"></canvas>
                                 </div>
-                                @endforeach
                             </div>
                         </div>
                     </div>
-                    <script>
-function number_format(number, decimals, dec_point, thousands_sep) {
-    // *     example: number_format(1234.56, 2, ',', ' ');
-    // *     return: '1 234,56'
-    number = (number + '').replace(',', '').replace(' ', '');
-    var n = !isFinite(+number) ? 0 : +number,
-        prec = !isFinite(+decimals) ? 0 : Math.abs(decimals),
-        sep = (typeof thousands_sep === 'undefined') ? ',' : thousands_sep,
-        dec = (typeof dec_point === 'undefined') ? '.' : dec_point,
-        s = '',
-        toFixedFix = function (n, prec) {
-            var k = Math.pow(10, prec);
-            return '' + Math.round(n * k) / k;
-        };
-    // Fix for IE parseFloat(0.55).toFixed(0) = 0;
-    s = (prec ? toFixedFix(n, prec) : '' + Math.round(n)).split('.');
-    if (s[0].length > 3) {
-        s[0] = s[0].replace(/\B(?=(?:\d{3})+(?!\d))/g, sep);
-    }
-    if ((s[1] || '').length < prec) {
-        s[1] = s[1] || '';
-        s[1] += new Array(prec - s[1].length + 1).join('0');
-    }
-    return s.join(dec);
-}
-
-// Area Chart Example
-var ctx = document.getElementById("myAreaChart");
-$.ajax({
-    type: 'GET',
-    url: '/chart/report',
-    success: function (data) {
-        console.log("#data", data);
-    }
-});
-
-var myLineChart = new Chart(ctx, {
-    type: 'line',
-    data: {
-        labels: [$q->nama_produk],
-        datasets: [
-            {
-                label: "Earnings",
-                lineTension: 0.3,
-                backgroundColor: "rgba(78, 115, 223, 0.05)",
-                borderColor: "rgba(78, 115, 223, 1)",
-                pointRadius: 3,
-                pointBackgroundColor: "rgba(78, 115, 223, 1)",
-                pointBorderColor: "rgba(78, 115, 223, 1)",
-                pointHoverRadius: 3,
-                pointHoverBackgroundColor: "rgba(78, 115, 223, 1)",
-                pointHoverBorderColor: "rgba(78, 115, 223, 1)",
-                pointHitRadius: 10,
-                pointBorderWidth: 2,
-                data: [$q->harga],
-            },
-            {
-                label: "Earnings",
-                lineTension: 0.3,
-                backgroundColor: "rgba(78, 115, 223, 0.05)",
-                borderColor: "rgb(105,223,78)",
-                pointRadius: 3,
-                pointBackgroundColor: "rgb(100,223,78)",
-                pointBorderColor: "rgb(78,223,102)",
-                pointHoverRadius: 3,
-                pointHoverBackgroundColor: "rgb(78,223,102)",
-                pointHoverBorderColor: "rgb(78,223,109)",
-                pointHitRadius: 10,
-                pointBorderWidth: 2,
-                data: [$q->pajak],
-            }],
-    },
-    options: {
-        maintainAspectRatio: false,
-        layout: {
-            padding: {
-                left: 10,
-                right: 25,
-                top: 25,
-                bottom: 0
-            }
-        },
-        scales: {
-            xAxes: [{
-                time: {
-                    unit: 'date'
-                },
-                gridLines: {
-                    display: false,
-                    drawBorder: false
-                },
-                ticks: {
-                    maxTicksLimit: 7
-                }
-            }],
-            yAxes: [{
-                ticks: {
-                    maxTicksLimit: 5,
-                    padding: 10,
-                    // Include a dollar sign in the ticks
-                    callback: function (value, index, values) {
-                        return 'Rp.' + number_format(value);
-                    }
-                },
-                gridLines: {
-                    color: "rgb(234, 236, 244)",
-                    zeroLineColor: "rgb(234, 236, 244)",
-                    drawBorder: false,
-                    borderDash: [2],
-                    zeroLineBorderDash: [2]
-                }
-            }],
-        },
-        legend: {
-            display: false
-        },
-        tooltips: {
-            backgroundColor: "rgb(255,255,255)",
-            bodyFontColor: "#858796",
-            titleMarginBottom: 10,
-            titleFontColor: '#6e707e',
-            titleFontSize: 14,
-            borderColor: '#dddfeb',
-            borderWidth: 1,
-            xPadding: 15,
-            yPadding: 15,
-            displayColors: false,
-            intersect: false,
-            mode: 'index',
-            caretPadding: 10,
-            callbacks: {
-                label: function (tooltipItem, chart) {
-                    var datasetLabel = chart.datasets[tooltipItem.datasetIndex].label || '';
-                    return datasetLabel + ': Rp.' + number_format(tooltipItem.yLabel);
-                }
-            }
-        }
-    }
-});
-</script>
 
                     <!-- Area Chart -->
                     <!-- <div class="col-xl-8 col-lg-7">
@@ -700,4 +558,144 @@ var myLineChart = new Chart(ctx, {
 
 </html>
 
+<script>
+function number_format(number, decimals, dec_point, thousands_sep) {
+    // *     example: number_format(1234.56, 2, ',', ' ');
+    // *     return: '1 234,56'
+    number = (number + '').replace(',', '').replace(' ', '');
+    var n = !isFinite(+number) ? 0 : +number,
+        prec = !isFinite(+decimals) ? 0 : Math.abs(decimals),
+        sep = (typeof thousands_sep === 'undefined') ? ',' : thousands_sep,
+        dec = (typeof dec_point === 'undefined') ? '.' : dec_point,
+        s = '',
+        toFixedFix = function (n, prec) {
+            var k = Math.pow(10, prec);
+            return '' + Math.round(n * k) / k;
+        };
+    // Fix for IE parseFloat(0.55).toFixed(0) = 0;
+    s = (prec ? toFixedFix(n, prec) : '' + Math.round(n)).split('.');
+    if (s[0].length > 3) {
+        s[0] = s[0].replace(/\B(?=(?:\d{3})+(?!\d))/g, sep);
+    }
+    if ((s[1] || '').length < prec) {
+        s[1] = s[1] || '';
+        s[1] += new Array(prec - s[1].length + 1).join('0');
+    }
+    return s.join(dec);
+}
 
+// Area Chart Example
+var ctx = document.getElementById("myAreaChart");
+$.ajax({
+    type: 'GET',
+    url: '/chart/report',
+    success: function (data) {
+        console.log("#data", data);
+    }
+});
+@foreach($query as $q)
+var myLineChart = new Chart(ctx, {
+    type: 'line',
+    data: {
+        labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
+        datasets: [
+            {
+                label: "Earnings",
+                lineTension: 0.3,
+                backgroundColor: "rgba(78, 115, 223, 0.05)",
+                borderColor: "rgba(78, 115, 223, 1)",
+                pointRadius: 3,
+                pointBackgroundColor: "rgba(78, 115, 223, 1)",
+                pointBorderColor: "rgba(78, 115, 223, 1)",
+                pointHoverRadius: 3,
+                pointHoverBackgroundColor: "rgba(78, 115, 223, 1)",
+                pointHoverBorderColor: "rgba(78, 115, 223, 1)",
+                pointHitRadius: 10,
+                pointBorderWidth: 2,
+                data: [0, 10000, 5000, 15000, 10000, 20000, 15000, 25000, 20000, 30000, 25000, 5000],
+            },
+            {
+                label: "Earnings",
+                lineTension: 0.3,
+                backgroundColor: "rgba(78, 115, 223, 0.05)",
+                borderColor: "rgb(105,223,78)",
+                pointRadius: 3,
+                pointBackgroundColor: "rgb(100,223,78)",
+                pointBorderColor: "rgb(78,223,102)",
+                pointHoverRadius: 3,
+                pointHoverBackgroundColor: "rgb(78,223,102)",
+                pointHoverBorderColor: "rgb(78,223,109)",
+                pointHitRadius: 10,
+                pointBorderWidth: 2,
+                data: [0, 5000, 15000, 35000, 30000, 20000, 45000, 25000, 10000, 70000, 35000, 3000],
+            }],
+    },
+    options: {
+        maintainAspectRatio: false,
+        layout: {
+            padding: {
+                left: 10,
+                right: 25,
+                top: 25,
+                bottom: 0
+            }
+        },
+        scales: {
+            xAxes: [{
+                time: {
+                    unit: 'date'
+                },
+                gridLines: {
+                    display: false,
+                    drawBorder: false
+                },
+                ticks: {
+                    maxTicksLimit: 7
+                }
+            }],
+            yAxes: [{
+                ticks: {
+                    maxTicksLimit: 5,
+                    padding: 10,
+                    // Include a dollar sign in the ticks
+                    callback: function (value, index, values) {
+                        return 'Rp.' + number_format(value);
+                    }
+                },
+                gridLines: {
+                    color: "rgb(234, 236, 244)",
+                    zeroLineColor: "rgb(234, 236, 244)",
+                    drawBorder: false,
+                    borderDash: [2],
+                    zeroLineBorderDash: [2]
+                }
+            }],
+        },
+        legend: {
+            display: false
+        },
+        tooltips: {
+            backgroundColor: "rgb(255,255,255)",
+            bodyFontColor: "#858796",
+            titleMarginBottom: 10,
+            titleFontColor: '#6e707e',
+            titleFontSize: 14,
+            borderColor: '#dddfeb',
+            borderWidth: 1,
+            xPadding: 15,
+            yPadding: 15,
+            displayColors: false,
+            intersect: false,
+            mode: 'index',
+            caretPadding: 10,
+            callbacks: {
+                label: function (tooltipItem, chart) {
+                    var datasetLabel = chart.datasets[tooltipItem.datasetIndex].label || '';
+                    return datasetLabel + ': Rp.' + number_format(tooltipItem.yLabel);
+                }
+            }
+        }
+    }
+});
+@endforeach
+</script>
