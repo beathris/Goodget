@@ -42,23 +42,38 @@ class TokoController extends Controller
 
     public function cari(Request $request)
     {
-        if ($request->session()->get('s_status') == self::ACTIVE) {
+        if($request->session()->get('s_status') == "aktif"){
             $data['session'] = array(
                 'id' => $request->session()->get('s_id'),
                 'username' => $request->session()->get('s_username'),
                 'role' => $request->session()->get('s_role'),
             );
-            // menangkap data pencarian
-            $cari = $request->cari;
-
-            $produk = DB::table('produk as p')->paginate(10)
-                ->join('kategori as k', 'p.kategori_id', '=', 'k.id')
-                ->where('p.nama_barang', 'LIKE', '%' . $cari . '%')
-                ->paginate()
-                ->get();
-
-            return view('pencarian', ['produk' => $produk]);
-
+        // menangkap data pencarian
+        $user_id = $request->session()->get('s_id');
+        $cari = $request->cari;
+        $data['produk']= DB::select("SELECT p.id, p.nama_barang, p.harga_jual, p.stok, p.warna, p.spesifikasi, p.foto, k.nama_kategori AS kategori FROM produk AS p RIGHT JOIN kategori AS k ON p.kategori_id = k.id WHERE p.nama_barang LIKE '%$cari%'");
+        // $data['kategori'] = DB::table('kategori')
+        // $data['produk']= DB::table('produk')
+        // ->select('produk.id','produk.nama_barang', 'produk.harga_jual','produk.stok','produk.warna' ,'produk.spesifikasi',
+        //     'produk.foto', 'kategori.nama_kategori')
+        // ->rightJoin('kategori', 'produk.kategori_id', '=', 'kategori.id')
+        // ->where('produk.nama_barang','like',"%".$cari."%")
+        // ->get();
+        }
+    }
+    public function search(Request $request){
+        if($request->session()->get('s_status') == "aktif"){
+            $data['session'] = array(
+                'id' => $request->session()->get('s_id'),
+                'username' => $request->session()->get('s_username'),
+                'role' => $request->session()->get('s_role'),
+            );
+            $data['title']= "Dashboard - Goodget";
+            $data['produk']=DB::select("SELECT p.id, p.nama_barang, p.harga_jual, p.stok, p.warna, p.spesifikasi, 
+            p.foto, k.nama_kategori AS kategori FROM produk AS p RIGHT JOIN kategori AS k ON p.kategori_id = k.id ");
+            return view('pencarian', $data);
+        }else {
+            return redirect('/login');
         }
     }
 

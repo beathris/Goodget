@@ -17,6 +17,8 @@ class LaporanController extends Controller
             'username' => $request->session()->get('s_username'),
             'role' => $request->session()->get('s_role'),
         );
+        $data['transaksi']=DB::select("SELECT COUNT(`produk_id`)AS transaksi,SUM(`jumlah`) AS jumlah,SUM(`harga`) AS harga,SUM(`pajak`) AS pajak FROM transaksi");
+        $data['query']=DB::select("SELECT * FROM transaksi");
         $data['title'] = "Laporan-Hasil-Perusahaan";
         return view('chart', $data);
 

@@ -15,7 +15,7 @@
                   <h6 class="m-0 font-weight-bold text-primary">Picture</h6>
                 </div>
                 <div class="card-body">
-                    <img src="{{$produk->foto}}" height="400" width="480">
+                    <img src="{{$produk->foto}}" height="300" width="400">
                 </div>
               </div>
             </div>
