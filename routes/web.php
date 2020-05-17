@@ -61,8 +61,6 @@ Route::post('/user/nota', 'TokoController@checkout');
 Route::get('/nota', 'TokoController@nota');
 Route::get('/download/nota/{id}', 'TokoController@downloadNota');
 
-Route::get('/laporan', 'LaporanController@viewChartCategory');
-Route::get('/chart/report', 'LaporanController@calculateReport');
 // Route::post('/keranjang/nota', 'TokoController@checkOut');
 
 // Route::get('/download/nota/{id}', 'ProdukController@downloadNota');
