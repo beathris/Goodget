@@ -86,22 +86,22 @@
       <hr class="sidebar-divider">
 
       <!-- Nav Item - Pages Collapse Menu -->
-      <li class="nav-item">
+      <!-- <li class="nav-item">
         <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages" aria-expanded="true" aria-controls="collapsePages">
           <i class="fas fa-fw fa-folder"></i>
           <span>Report</span>
         </a>
         <div id="collapsePages" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
-          <div class="bg-white py-2 collapse-inner rounded">
+          <div class="bg-white py-2 collapse-inner rounded"> -->
             <!-- <h6 class="collapse-header">Login Screens:</h6> -->
-            <a class="collapse-item" href="/laporan">All Report</a>
+            <!-- <a class="collapse-item" href="/laporan">All Report</a>
             <a class="collapse-item" href="register.html">Buying Report</a>
           </div>
         </div>
-      </li>
+      </li> -->
 
       <!-- Divider -->
-      <hr class="sidebar-divider d-none d-md-block">
+      <!-- <hr class="sidebar-divider d-none d-md-block"> -->
 
       <!-- Sidebar Toggler (Sidebar) -->
       <div class="text-center d-none d-md-inline">
@@ -222,7 +222,7 @@
         <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
         <div class="modal-footer">
           <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-          <a class="btn btn-primary" href="{{url('/signout')}}">Logout</a>
+          <a class="btn btn-primary" href="{{url('/index')}}">Logout</a>
         </div>
       </div>
     </div>
