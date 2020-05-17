@@ -166,7 +166,10 @@
     $(".plus").on("click", function () {
         let button = $(this);
         let qty = $(button).parent().find("#qty");
-        qty.text((Number(qty.text()) + 1));
+        let qty_item = Number(qty.text()) + 1;
+        qty.text(qty_item);
+        let price = Number($("#price").text());
+        $("#subtotal").text((price * qty_item));
         console.log($(button).parent().find("#qty").text())
 
     });
@@ -174,7 +177,10 @@
 
         let button = $(this);
         let qty = $(button).parent().find("#qty");
-        qty.text((Number(qty.text()) - 1));
+        let qty_item = Number(qty.text()) - 1;
+        qty.text(qty_item);
+        let price = Number($("#price").text());
+        $("#subtotal").text((price * qty_item));
         console.log($(button).parent().find("#qty").text())
 
     });

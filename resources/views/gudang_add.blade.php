@@ -58,7 +58,7 @@
                     </p>
                 </div><div class="form-group">
                     <p> Tanggal Masuk
-                        <input type="datetime-local" name="tgl_masuk" class="form-control">
+                        <input type="date" name="tgl_masuk" class="form-control">
                     </p>
                 </div>
                 <div class="form-group">

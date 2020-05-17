@@ -29,9 +29,9 @@ class LaporanController extends Controller
             ->join('kategori', 'produk.kategori_id', '=', 'kategori.id')
             ->get();
         $data['chart'] = $data['transaksi']->groupBy('nama_kategori');
-        $data['kategori'] = $data['chart']->each(function ($kategori){
-            $nama = $kategori->jumlah;
-        });
+//        $data['kategori'] = $data['chart']->each(function ($kategori){
+//            $nama = $kategori->jumlah;
+//        });
 
         return $data;
 

@@ -99,7 +99,7 @@ class GudangController extends Controller
                 'username' => $request->session()->get('s_username'),
                 'role' => $request->session()->get('s_role'),
         );
-        $data['produk'] = DB::selectOne("SELECT p.nama_barang, p.tgl_masuk, p.harga, p.harga_jual, p.stok, p.warna, p.spesifikasi, p.foto, k.nama_kategori AS kategori FROM produk AS p RIGHT JOIN kategori AS k ON p.kategori_id = k.id WHERE p.id=?", [$id]);
+        $data['produk'] = Produk::where('id', $id)->first();
         $data['title'] = $data['produk']->nama_barang. ' - Detail';
         return view('gudang_detail', $data);
         } else {
@@ -141,7 +141,7 @@ class GudangController extends Controller
                 'role' => $request->session()->get('s_role'),
         );
         DB::delete("DELETE  FROM produk WHERE id=?",[$id]);
-        return redirect('/user/keranjang');
+        return redirect('/admin');
         } else {
             return redirect('/login');
         }

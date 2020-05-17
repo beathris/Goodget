@@ -67,12 +67,12 @@
                 </div>
                 <div class="form-group">
                     <p> Tanggal Masuk
-                        <input type="datetime-local" name="tgl_masuk" class="form-control" value="{{$produk->tgl_masuk}}">
+                        <input type="date" name="tgl_masuk" class="form-control" value="{{$produk->tgl_masuk}}">
                     </p>
                 </div>
                 <div class="form-group">
                     <p> Deskripsi
-                        <textarea name="spesifikasi" class="form-control" value="{{$produk->spesifikasi}}"></textarea>
+                        <textarea name="spesifikasi" class="form-control" value="">{{$produk->spesifikasi}}</textarea>
                     </p>
                 </div>
                 <input type="submit" value="Edit" class="btn btn-success col-sm-12"/>

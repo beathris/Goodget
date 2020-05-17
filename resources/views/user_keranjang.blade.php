@@ -54,7 +54,7 @@
                                         <span id="qty" name="qty">{{$k->jumlah}}</span>
                                         <button type="button" class="plus btn btn-success btn-sm float-right">+</button>
                                     </td>
-                                    <td class="text-right">{{$k->subtotal}}</td>
+                                    <td class="text-right" id="subtotal">{{$k->subtotal}}</td>
                                     <td class="text-right"><a href="{{url('/user/keranjang/delete/'.$k->produk_id)}}">
                                             <button type="button" class="btn btn-danger btn-sm float-right">X</button>
                                     </a>
