@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\Transaksi;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
-use function foo\func;
 
 class LaporanController extends Controller
 {
