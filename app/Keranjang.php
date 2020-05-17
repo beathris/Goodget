@@ -12,8 +12,5 @@ class Keranjang extends Model
         public function produk(){
             return $this->belongsTo(Produk::class);
         }
-        public function nota(){
-             return $this->hasMany(Nota::class);
-        }
 
 }

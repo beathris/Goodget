@@ -12,13 +12,6 @@ class Nota extends Model
            public function user(){
                return $this->belongsTo(User::class);
            }
-           public function keranjang(){
-               return $this->belongsTo(Kategori::class);
-           }
-           public function produk()
-           {
-               return $this->hasMany(Produk::class);
-           }
 
            public function transaksi()
            {
