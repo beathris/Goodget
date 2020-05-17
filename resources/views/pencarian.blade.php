@@ -50,10 +50,10 @@
 							<div class="col-md-4 col-xs-6">
 								<div class="product">
 									<div class="product-img">
-									<a href="{{url('/user/detail/'.$p->id)}}"><img src="{{$p->foto}}" alt="" width="250px" ></a>
+									<a href="{{url('/user/detail/'.$p->id)}}"><img src="{{$p->foto}}" alt="" width="250px" height="250px"></a>
 									</div>
 									<div class="product-body">
-										<p class="product-category">{{$p->kategori}}</p>
+										<p class="product-category">{{$p->nama_kategori}}</p>
 										<h3 class="product-name"><a href="{{url('/user/detail/'.$p->id)}}}">{{$p->id}} | {{$p->nama_barang}}</a></h3>
 										<h4 class="product-price">{{$p->harga_jual}}</h4>
 									</div>

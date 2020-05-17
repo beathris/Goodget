@@ -60,16 +60,15 @@
                 <!-- SEARCH BAR -->
                 <div class="col-md-6">
                     <div class="header-search">
-                        <form action="{{url('/user/cari/produk')}}" method="GET">
-                            <select class="input-select">
-                                <option value="0"></option>
-                                <option value="Laptop"><a href="{{url('/user/kategori/laptop')}}">Laptop</a></option>
-                                <option value="2"><a href="{{url('/user/kategori/smartphone')}}">Smartphone</a></option>
-                                <option value="3"><a href="{{url('/user/kategori/aksesoris')}}">Accessories</a></option>
+                        <form action="/user/cari/produk" method="GET">
+                            <select name="kategori" id="kategori" class="input-select">
+                                <option type="input" value="all">All</option>
+                                <option type="input" value="laptop">Laptop</option>
+                                <option type="input" value="smartphone">Smartphone</option>
+                                <option type="input" value="accessories">Accessories</option>
                             </select>
-                            <input class="input" name="cari" placeholder="Search here">
-                            <button class="search-btn"><a href="{{url('/user/cari/produk')}}">Search</a></button>
-                            </a>
+                            <input class="input" name="cari" id="cari" placeholder="Search here">
+                            <button class="search-btn" type="submit">Search</button>
                         </form>
                     </div>
                 </div>
@@ -123,7 +122,7 @@
 @yield('konten')
 
 <!-- FOOTER -->
-<footer id="footer" style="position:absolute;bottom:0; width:100%;">
+<footer id="footer">
 
     <!-- bottom footer -->
     <div id="bottom-footer" class="section">

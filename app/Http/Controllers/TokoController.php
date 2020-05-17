@@ -48,17 +48,18 @@ class TokoController extends Controller
                 'username' => $request->session()->get('s_username'),
                 'role' => $request->session()->get('s_role'),
             );
-            // menangkap data pencarian
-            $cari = $request->cari;
 
-            $produk = DB::table('produk as p')->paginate(10)
-                ->join('kategori as k', 'p.kategori_id', '=', 'k.id')
-                ->where('p.nama_barang', 'LIKE', '%' . $cari . '%')
-                ->paginate()
-                ->get();
+            $products = Produk::join('kategori', 'produk.kategori_id', '=', 'kategori.id');
 
-            return view('pencarian', ['produk' => $produk]);
+            if($request->kategori != "all") {
+                $products->where('nama_kategori', $request->kategori);
+            }
+            if ($request->cari != null) {
+                $products->where('produk.nama_barang', 'LIKE', '%' . $request->cari . '%');
+            }
 
+            $data['produk'] = $products->get();
+            return view('pencarian', $data);
         }
     }
 
