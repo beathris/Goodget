@@ -8,9 +8,9 @@ use Illuminate\Http\Request;
 
 class LaporanController extends Controller
 {
-    public function __construct()
-    {
+    public function __construct(){
     }
+
     public function viewChartCategory(Request $request){
         $data['session'] = array(
             'id' => $request->session()->get('s_id'),
@@ -19,7 +19,6 @@ class LaporanController extends Controller
         );
         $data['title'] = "Laporan-Hasil-Perusahaan";
         return view('chart', $data);
-
     }
 
     public function calculateReport(Request $request)
@@ -35,7 +34,7 @@ class LaporanController extends Controller
         });
 
         $categories = $transaksi->groupBy('nama_kategori')->map(function ($data) {
-            return collect($data)->groupBy('tgl_transaksi');
+            return $data->groupBy('tgl_transaksi');
         });
 
         return $categories->map(function ($category) {
