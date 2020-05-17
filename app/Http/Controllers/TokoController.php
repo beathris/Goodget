@@ -161,6 +161,22 @@ class TokoController extends Controller
         }
     }
 
+    public function transaksi(Request $request)
+    {
+        if ($request->session()->get('s_status') == self::ACTIVE) {
+            $data['session'] = array(
+                'id' => $request->session()->get('s_id'),
+                'username' => $request->session()->get('s_username'),
+                'role' => $request->session()->get('s_role'),
+            );
+            $data['title'] = "Dashboard - Goodget";
+            $data['transaksi'] = DB::select("SELECT n.id, n.`tgl_transaksi`, n.`total_belanja`, n.`status`, u.username FROM nota AS n RIGHT JOIN user AS u ON n.user_id = u.id");
+            return view('user_transaksi', $data);
+        } else {
+            return redirect('/login');
+        }
+    }
+
     public function addToCart($id, Request $request)
     {
         $user_id = $request->session()->get('s_id');

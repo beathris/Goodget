@@ -12,6 +12,8 @@
 
     <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
 
+    
+
     <link rel="stylesheet" type="text/css" href="{{url('assets/library/star.css')}}"/>
     <!-- Bootstrap -->
     <link type="text/css" rel="stylesheet" href="{{url('assets/library/template/css/bootstrap.min.css')}}"/>
@@ -56,7 +58,6 @@
                     </div>
                 </div>
                 <!-- /LOGO -->
-
                 <!-- SEARCH BAR -->
                 <div class="col-md-6">
                     <div class="header-search">
@@ -76,7 +77,7 @@
                 <!-- /SEARCH BAR -->
 
                 <!-- ACCOUNT -->
-                <div class="col-md-3 clearfix">
+                <div class="col-lg-3 clearfix">
                     <div class="header-ctn">
                         <!-- Cart -->
                         <div>
@@ -87,18 +88,32 @@
                         </div>
                         <!-- /Cart -->
 
-                        <!-- account -->
+                        <!-- Transaksi -->
                         <div>
-                            <a href="{{url('/sign-out')}}">
+                            <a href="{{url('/user/transaksi')}}">
+                                <i class="fa fa-list"></i>
+                                <span>Transaksi</span>
+                            </a>
+                        </div>
+                        <div>
+                        <a href="{{url('/sign-out')}}">
                                 <i class="fa fa-user-o"></i>
                                 <span>{{$session['username']}} | SignOut</span>
                             </a>
                         </div>
+                        
+                        <!-- /Transaksi -->
+                        <!-- account -->
+                        
                         <!-- /account -->
                     </div>
+                    
+                    <div>
+                            
                 </div>
                 <!-- /ACCOUNT -->
             </div>
+            
             <!-- row -->
         </div>
         <!-- container -->

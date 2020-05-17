@@ -60,6 +60,7 @@ Route::get('/user/beli/{id}', 'TokoController@addToCart');
 Route::get('/user/keranjang', 'TokoController@keranjang');
 Route::get('/user/keranjang/delete/{id}', 'TokoController@keranjangDeletePost');
 Route::post('/user/nota', 'TokoController@checkout');
+Route::get('/user/transaksi', 'TokoController@transaksi');
 Route::get('/nota', 'TokoController@nota');
 Route::get('/download/nota/{id}', 'TokoController@downloadNota');
 
