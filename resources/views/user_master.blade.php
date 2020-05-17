@@ -51,7 +51,7 @@
                 <div class="col-md-3">
                     <div class="header-logo">
                         <a href="{{url('/user')}}" class="logo">
-                            <img src="{{url('assets/library/template/images/logo.png')}}" alt="">
+                            <img src="{{url('assets/library/template/images/logo2.png')}}" alt="">
                         </a>
                     </div>
                 </div>
@@ -88,7 +88,7 @@
 
                         <!-- account -->
                         <div>
-                            <a href="{{url('/sign-out')}}">
+                            <a href="{{url('/index')}}">
                                 <i class="fa fa-user-o"></i>
                                 <span>{{$session['username']}} | SignOut</span>
                             </a>
@@ -165,10 +165,7 @@
     $(".plus").on("click", function () {
         let button = $(this);
         let qty = $(button).parent().find("#qty");
-        let qty_item = Number(qty.text()) + 1;
-        qty.text(qty_item);
-        let price = Number($("#price").text());
-        $("#subtotal").text((price * qty_item));
+        qty.text((Number(qty.text()) + 1));
         console.log($(button).parent().find("#qty").text())
 
     });
@@ -176,10 +173,7 @@
 
         let button = $(this);
         let qty = $(button).parent().find("#qty");
-        let qty_item = Number(qty.text()) - 1;
-        qty.text(qty_item);
-        let price = Number($("#price").text());
-        $("#subtotal").text((price * qty_item));
+        qty.text((Number(qty.text()) - 1));
         console.log($(button).parent().find("#qty").text())
 
     });
