@@ -27,6 +27,7 @@ Route::post('/signup/action', 'UserController@signupAction');
 Route::get('/signout', 'GudangController@signOut');
 Route::get('/sign-out', 'TokoController@signOut');
 
+
 //admin
 Route::get('/admin', 'GudangController@index');
 Route::get('/admin/add/post', 'GudangController@gudangAddPost');
@@ -49,6 +50,7 @@ Route::get('/admin/kategori/search', 'GudangController@gudangSearchKategori');
 //user
 Route::get('/user', 'TokoController@index');
 Route::get('/user/cari/produk', 'TokoController@cari');
+Route::get('/user/cari', 'TokoController@search');
 Route::get('/user/detail/{id}', 'TokoController@detail');
 Route::get('/user/kategori/laptop', 'TokoController@kategori');
 Route::get('/user/kategori/smartphone', 'TokoController@kategoriHp');
@@ -61,6 +63,10 @@ Route::post('/user/nota', 'TokoController@checkout');
 Route::get('/nota', 'TokoController@nota');
 Route::get('/download/nota/{id}', 'TokoController@downloadNota');
 
+Route::get('/laporan', 'LaporanController@viewChartCategory');
+Route::get('/chart/report', 'LaporanController@calculateReport');
+Route::get('laporan/grafik', 'LaporanControllerr@grafik');
 // Route::post('/keranjang/nota', 'TokoController@checkOut');
 
 // Route::get('/download/nota/{id}', 'ProdukController@downloadNota');
+
