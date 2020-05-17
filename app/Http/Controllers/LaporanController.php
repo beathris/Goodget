@@ -38,4 +38,13 @@ class LaporanController extends Controller
         return $data;
 
     }
+
+    public function grafik(){
+ 
+        $penjualan = \App\BukuTamu::getGrafik();
+        
+        return view('chart', compact('penjualan'));
+ 
+ 
+    }
 }

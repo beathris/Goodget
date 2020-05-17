@@ -65,6 +65,7 @@ Route::get('/download/nota/{id}', 'TokoController@downloadNota');
 
 Route::get('/laporan', 'LaporanController@viewChartCategory');
 Route::get('/chart/report', 'LaporanController@calculateReport');
+Route::get('laporan/grafik', 'LaporanControllerr@grafik');
 // Route::post('/keranjang/nota', 'TokoController@checkOut');
 
 // Route::get('/download/nota/{id}', 'ProdukController@downloadNota');
