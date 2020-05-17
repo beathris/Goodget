@@ -49,9 +49,10 @@ class TokoController extends Controller
                 'role' => $request->session()->get('s_role'),
             );
 
-            $products = Produk::join('kategori', 'produk.kategori_id', '=', 'kategori.id');
+            $products = Produk::join('kategori', 'produk.kategori_id', '=', 'kategori.id')
+                ->select('kategori.nama_kategori', 'produk.*');
 
-            if($request->kategori != "all") {
+            if ($request->kategori != "all") {
                 $products->where('nama_kategori', $request->kategori);
             }
             if ($request->cari != null) {
@@ -176,7 +177,7 @@ class TokoController extends Controller
 
     public function keranjang(Request $request)
     {
-//        if ($request->session()->get('s_status') == self::ACTIVE) {
+        if ($request->session()->get('s_status') == self::ACTIVE) {
             $data['session'] = array(
                 'id' => $request->session()->get('s_id'),
                 'username' => $request->session()->get('s_username'),
@@ -190,11 +191,10 @@ class TokoController extends Controller
                     'keranjang.user_id')
                 ->join('produk', 'keranjang.produk_id', '=', 'produk.id')
                 ->get();
-//            dd($data['keranjang']);
             return view('user_keranjang', $data);
-//        } else {
-//            return redirect('/login');
-//        }
+        } else {
+            return redirect('/login');
+        }
     }
 
     public function keranjangDeletePost($id, Request $request)
@@ -230,16 +230,7 @@ class TokoController extends Controller
             })->sum();
 
             $response = [];
-            $response["error"] = [];
-
-            $products->each(function ($product) use ($response, $request_by_product_id) {
-                    if ($product->stok < $request_by_product_id->get($product->id)->first()['qty']) {
-                        $response["error"][$product->id] = "Stok untuk " . $product->nama_barang . " tidak mencukupi";
-                    } else {
-                        $product->stok -= $request_by_product_id->get($product->id)->first()['qty'];
-                    }
-                });
-
+            $response = $this->errorValidation($products, $request_by_product_id, $response);
             if ($response["error"] != null) return $response;
 
             $transactions = $request->map(function ($item) use ($product_by_product_id){
@@ -265,7 +256,6 @@ class TokoController extends Controller
             $products->each(function ($product) {
                 $product->save();
             });
-//            return action('TokoController@nota', ['id' => $nota['id']]);
             $response["redirect"] = action('TokoController@nota', ['id' => $nota['id']]);
             return $response;
         }
@@ -331,7 +321,22 @@ class TokoController extends Controller
         $response["total_bayar"] = $response["pajak"] + $response["total_belanja"];
         $response["tgl_transaksi"] = $data['transaksi']->get(0)->tgl_transaksi;
         $pdf = PDF::loadview('user_data_nota', $response);
-        return $pdf->download('nota-file-'.$response["tgl_transaksi"].'.pdf');
+        return $pdf->download('nota-file-' . $response["tgl_transaksi"] . '.pdf');
+    }
+
+    public function errorValidation($products, \Illuminate\Support\Collection $request_by_product_id, array $response): array
+    {
+        foreach ($products as $product) {
+            if ((int)$request_by_product_id->get($product->id)->first()['qty'] < 1) {
+                $response["error"][$product->id] = "Minimal pemesanan " . $product->nama_barang . " adalah 1!";
+            }
+            if ($product->stok < $request_by_product_id->get($product->id)->first()['qty']) {
+                $response["error"][$product->id] = "Stok untuk " . $product->nama_barang . " tidak mencukupi";
+            } else {
+                $product->stok -= $request_by_product_id->get($product->id)->first()['qty'];
+            }
+        }
+        return $response;
     }
 
 }

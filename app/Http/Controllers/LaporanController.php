@@ -3,8 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Transaksi;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
+use function foo\func;
 
 class LaporanController extends Controller
 {
@@ -22,18 +23,28 @@ class LaporanController extends Controller
 
     }
 
-    public function calculateReport(Request $request) {
-        $data['transaksi']= DB::table('transaksi')
-            ->join('nota', 'nota.id', '=', 'transaksi.nota_id')
+    public function calculateReport(Request $request)
+    {
+        $transaksi = Transaksi::join('nota', 'nota.id', '=', 'transaksi.nota_id')
             ->join('produk', 'produk.id', '=', 'transaksi.produk_id')
             ->join('kategori', 'produk.kategori_id', '=', 'kategori.id')
+            ->select('transaksi.jumlah', 'nota.tgl_transaksi', 'kategori.nama_kategori')
             ->get();
-        $data['chart'] = $data['transaksi']->groupBy('nama_kategori');
-        $data['kategori'] = $data['chart']->each(function ($kategori){
-            return $kategori->first();
+
+        $transaksi->each(function ($data) {
+            $data->tgl_transaksi = Carbon::parse($data->tgl_transaksi)->format('d-m-Y');
         });
 
-        return $data;
+        $categories = $transaksi->groupBy('nama_kategori')->map(function ($data) {
+            return collect($data)->groupBy('tgl_transaksi');
+        });
 
+        return $categories->map(function ($category) {
+            return $category->map(function ($tgl_transaksi) {
+                return $tgl_transaksi->map(function ($data) {
+                    return $data->jumlah;
+                })->sum();
+            });
+        });
     }
 }
