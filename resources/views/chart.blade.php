@@ -96,7 +96,7 @@
                 <div class="bg-white py-2 collapse-inner rounded">
                     <!-- <h6 class="collapse-header">Login Screens:</h6> -->
                     <a class="collapse-item" href="/laporan">All Report</a>
-                    <a class="collapse-item" href="register.html">Buying Report</a>
+{{--                    <a class="collapse-item" href="register.html">Buying Report</a>--}}
                 </div>
             </div>
         </li>

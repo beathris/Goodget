@@ -184,13 +184,8 @@ class TokoController extends Controller
                 'role' => $request->session()->get('s_role'),
             );
             //$data['title']= "Dashboard - Goodget";
-            $data['keranjang'] = DB::table('keranjang')
-                ->select('produk.nama_barang', 'produk.harga_jual',
-                    'produk.foto', 'keranjang.subtotal',
-                    'keranjang.jumlah', 'keranjang.produk_id',
-                    'keranjang.user_id')
-                ->join('produk', 'keranjang.produk_id', '=', 'produk.id')
-                ->get();
+            $data['keranjang'] = Keranjang::join('produk', 'produk.id', '=', 'keranjang.produk_id')->get();
+
             return view('user_keranjang', $data);
         } else {
             return redirect('/login');
@@ -215,13 +210,13 @@ class TokoController extends Controller
     public function checkOut(Request $request)
     {
         if ($request->method() == "POST") {
-            $request = collect($request->items)
+            $request_item = collect($request->items)
                 ->flatMap(function ($item) {return $item;});
-            $user_id = $request->first()['user_id'];
-            $products_id = $request
+            $user_id = $request_item->first()['user_id'];
+            $products_id = $request_item
                 ->map(function ($item) {return (int) $item['product_id'];});
 
-            $request_by_product_id = $request->groupBy('product_id');
+            $request_by_product_id = $request_item->groupBy('product_id');
 
             $products = Produk::whereIn('id', $products_id)->get();
             $product_by_product_id = $products->groupBy('id');
@@ -230,10 +225,11 @@ class TokoController extends Controller
             })->sum();
 
             $response = [];
+            $response["error"] = [];
             $response = $this->errorValidation($products, $request_by_product_id, $response);
             if ($response["error"] != null) return $response;
 
-            $transactions = $request->map(function ($item) use ($product_by_product_id){
+            $transactions = $request_item->map(function ($item) use ($product_by_product_id){
                 $transaksi = new Transaksi();
                 $transaksi->harga = $product_by_product_id->get($item['product_id'])->first()['harga_jual'];
                 $transaksi->pajak = 0.1 * $transaksi->harga * $item["qty"];
@@ -324,7 +320,7 @@ class TokoController extends Controller
         return $pdf->download('nota-file-' . $response["tgl_transaksi"] . '.pdf');
     }
 
-    public function errorValidation($products, \Illuminate\Support\Collection $request_by_product_id, array $response): array
+    private function errorValidation($products, $request_by_product_id, $response): array
     {
         foreach ($products as $product) {
             if ((int)$request_by_product_id->get($product->id)->first()['qty'] < 1) {

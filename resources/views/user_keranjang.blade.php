@@ -41,8 +41,8 @@
                                 <!-- <th class="text-right">Opsi</th> -->
                             </tr>
                             </thead>
-                            <tbody>
                             @foreach($keranjang as $k)
+                            <tbody>
                                 <tr id="item" class="item">
                                     <input type="hidden" name="user_id" id="user_id" value="{{$k->user_id}}">
                                     <td class="text-center" name="product_id" id="product_id">{{$k->produk_id}}</td>
@@ -60,7 +60,7 @@
                                     </a>
                                     </td>
                                 </tr>
-                            @endforeach
+
                             <!-- <tr>
                                         <td colspan="4" class="text-right pr-2" style="background: #efefef;">Sub Total</td>
                                         <td class="text-right" style="background: #efefef;">Rp. 0.00</td>
@@ -74,6 +74,7 @@
                                         <td class="text-right" ><b>Rp. 0.00</b></td>
                                     <tr> -->
                             </tbody>
+                            @endforeach
                         </table>
 
                     </div>

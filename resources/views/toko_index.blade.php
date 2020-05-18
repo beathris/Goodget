@@ -17,7 +17,7 @@
     <h3>Role     = {{$session['role']}}</h3>
 </div>
 <div>
-    <a href="{{url('/sign-out')}}" class="btn btn-danger">Sign Out</a>
+    <a href="{{url('/signout')}}" class="btn btn-danger">Sign Out</a>
 </div>
 
 <!-- FOOTER -->

@@ -162,20 +162,25 @@
         integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
         crossorigin="anonymous"></script>
 <script>
+
     $(".plus").on("click", function () {
         let button = $(this);
         let qty = $(button).parent().find("#qty");
-        qty.text((Number(qty.text()) + 1));
+        let qty_item = Number(qty.text()) + 1;
+        qty.text(qty_item);
+        let price = Number($(button).parent().parent().find("#price").text());
+        $(button).parent().parent().find("#subtotal").text((price * qty_item));
         console.log($(button).parent().find("#qty").text())
 
     });
     $(".min").on("click", function () {
-
         let button = $(this);
         let qty = $(button).parent().find("#qty");
-        qty.text((Number(qty.text()) - 1));
+        let qty_item = Number(qty.text()) - 1;
+        qty.text(qty_item);
+        let price = Number($(button).parent().parent().find("#price").text());
+        $(button).parent().parent().find("#subtotal").text((price * qty_item));
         console.log($(button).parent().find("#qty").text())
-
     });
 
     $("#checkout").on("click", function () {

@@ -48,7 +48,7 @@
 						<div class="col-md-3">
 							<div class="header-logo">
 								<a href="{{url('/index')}}" class="logo">
-									<img src="{{url('assets/library/template/images/logo.png')}}" alt="">
+									<img src="{{url('assets/library/template/images/logo2.png')}}" alt="">
 								</a>
 							</div>
 						</div>
